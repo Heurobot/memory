@@ -14,14 +14,14 @@ int main(int argc, const char *argv[])
 	key_t key;
 	int shmid;
 	void *buf;
-	if(((key = ftok("./keytest.txt", 100)) == -1))
+	if((key = ftok("./keytest.txt", 100)) == -1)
 	{
 		perror("ftok:");
 		exit(-1);
 	}
 
 	printf("%d\n", key);
-	if((shmid = shmget(key, 0, 0|0666)) == -1)//申请结构体大小的共享内存
+	if((shmid = shmget(key, sizeof(shared_memory_data), IPC_CREAT|0666)) == -1)//申请结构体大小的共享内存
 	{
 		perror("shmget:");
 		exit(-1);
